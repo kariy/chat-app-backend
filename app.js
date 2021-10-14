@@ -9,20 +9,20 @@ const io = new Server(httpServer, { cors: { origin: "*" } });
 const chat = io.of("/chat");
 
 chat.on("connection", (socket) => {
-    console.log("someone is connected");
+    console.log("connection established");
 
     socket.on("join room", (room, user) => {
         console.log("socket", socket.id, "joined room", room);
 
         socket.join(room);
-        socket.to(room).emit("user join room", user);
+        // socket.to(room).emit("user join room", user);
     });
 
     socket.on("leave room", (room, user) => {
         console.log("socket", socket.id, "left room", room);
 
         socket.leave(room);
-        socket.to(room).emit("user leave room", user);
+        // socket.to(room).emit("user leave room", user);
     });
 
     socket.on("message", (data) => {
@@ -42,4 +42,4 @@ chat.on("connection", (socket) => {
     });
 });
 
-httpServer.listen(8000);
+httpServer.listen(process.env.PORT || 3000);
